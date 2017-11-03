@@ -134,7 +134,7 @@ if __name__ == '__main__':
     rospy.init_node('clustering', anonymous=True)
 
     # TODO: Create Subscribers
-    pcl_sub = rospy.Subscriber('/sensor_stick/point_cloud', pc2.PointCloud2 , queue_size=1)
+    pcl_sub = rospy.Subscriber('/sensor_stick/point_cloud', pc2.PointCloud2, pcl_callback, queue_size=1)
 
     # TODO: Create Publishers
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
