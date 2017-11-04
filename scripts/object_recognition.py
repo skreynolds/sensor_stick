@@ -162,8 +162,8 @@ def pcl_callback(pcl_msg):
         ros_cluster = pcl_to_ros(pcl_cluster)
 
         # Extract histogram features
-        chists = compute_color_histograms(sample_cloud, using_hsv=True)
-        normals = get_normals(sample_cloud)
+        chists = compute_color_histograms(ros_cluster, using_hsv=True)
+        normals = get_normals(ros_cluster)
         nhists = compute_normal_histograms(normals)
 
         # Compute the associated feature vector
