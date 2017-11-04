@@ -16,7 +16,7 @@ from sensor_stick.marker_tools import *
 from sensor_stick.msg import DetectedObjectsArray
 from sensor_stick.msg import DetectedObject
 from sensor_stick.pcl_helper import *
-from pcl_helper import *
+#from pcl_helper import *
 
 def get_normals(cloud):
     get_normals_prox = rospy.ServiceProxy('/feature_extractor/get_normals', GetNormals)
@@ -150,7 +150,7 @@ def pcl_callback(pcl_msg):
 # Exercise-3 TODOs:
 
     # Classify the clusters! (loop through each detected cluster one at a time)
-    detected_object_labels = []
+    detected_objects_labels = []
     detected_objects = []
 
     # Grab the points for the cluster
@@ -203,8 +203,15 @@ if __name__ == '__main__':
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
+    object_markers_pub = rospy.Publisher("/object_markers", Marker, queue_size=1)
+    detected_objects_pub = rospy.Publisher("/detected_objects", DetectedObjectsArray, queue_size=1)
 
     # TODO: Load Model From disk
+    model = pickle.load(open('model.sav', 'rb'))
+    clf = model['classifier']
+    encoder = LabelEncoder()
+    encoder.classes_ = model['classes']
+    scaler = model['scaler']
 
     # Initialize color_list
     get_color_list.color_list = []
